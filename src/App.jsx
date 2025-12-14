@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { motion, scale } from "motion/react"
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
-
+import logo from "./assets/SpotifyLogo.png"
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
@@ -88,8 +88,20 @@ function App() {
   return (
     <div className="App">
       <div className = "SearchBar">
-        <h1>Spotify Gallery</h1>
 
+        <h1>
+           <div style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
+             <img src={logo} alt="Spotify Logo"
+               style={{ 
+                 width: "75px", 
+                 height: "75px", 
+                 paddingRight: "10px",
+               }} 
+             />
+            Spotify Album Gallery
+          </div>
+        </h1>
+        
         <br></br>
 
         <Container>
@@ -114,7 +126,9 @@ function App() {
                 marginRight: "10px",
                 paddingLeft: "10px",
                 marginBottom: "40px",
-                textAlign: 'center'
+                textAlign: 'center',
+                fontSize: "1.5rem",
+                fontWeight: "bold"
               }}
             />
             <br/>

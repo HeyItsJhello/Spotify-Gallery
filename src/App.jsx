@@ -10,7 +10,7 @@ import {
   CardTitle
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
-
+import { motion } from "motion/react"
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
 
@@ -37,6 +37,17 @@ function App() {
         setAccessToken(data.access_token);
       });
   }, []);
+
+  useEffect(() => {
+    // Add this code block inside the useEffect hook
+    albums.forEach((album) => {
+      const card = document.getElementById(album.id);
+      if (card) {
+        // Add your animation code here
+        card.classList.add("animated"); // Replace "animated" with the class name for your animation
+      }
+    });
+  }, [albums]);
 
   async function search() {
     let artistParams = {
@@ -104,6 +115,8 @@ function App() {
         </InputGroup>
       </Container>
       
+      <br></br>
+
       <Container className="Albums">
         <Row
           style = {{
@@ -115,60 +128,66 @@ function App() {
           }}
         >
           {
-            albums.map((album) => {
+            albums.map((album, index) => {
               return (
-                <Card
-                  key = {album.id}
-                  style = {{
-                    backgroundColor: "white",
-                    margin: "10px",
-                    borderRadius: "5px",
-                    marginBottom: "30px"
-                  }}
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  key={album.id}
+                  className="card"
                 >
-                  <Card.Img
-                    width={200}
-                    src={album.images[0].url}
-                    style={{borderRadius: '4%'}}
-                  />
+                  <Card
+                    key = {album.id}
+                    style = {{
+                      backgroundColor: "white",
+                      margin: "10px",
+                      borderRadius: "5px",
+                      marginBottom: "30px"
+                    }}
+                  >
+                    <Card.Img
+                      width={200}
+                      src={album.images[0].url}
+                      style={{borderRadius: '4%'}}
+                    />
 
-                  <CardBody>
-                    <CardTitle
-                      style={{
-                        whiteSpace: 'wrap',
-                        fontWeight: 'bold',
-                        maxWidth: '200px',
-                        fontSize: '18px',
-                        marginTop: '10px',
-                        color: 'black'
-                      }}
-                    >
-                      {album.name}
-                    </CardTitle>
+                    <CardBody>
+                      <CardTitle
+                        style={{
+                          whiteSpace: 'wrap',
+                          fontWeight: 'bold',
+                          maxWidth: '200px',
+                          fontSize: '18px',
+                          marginTop: '10px',
+                          color: 'black'
+                        }}
+                      >
+                        {album.name}
+                      </CardTitle>
 
-                    <Card.Text
-                      style = {{color: 'black'}}
-                    >
-                      Release Date: <br/> {album.release_date}
-                    </Card.Text>
+                      <Card.Text
+                        style = {{color: 'black'}}
+                      >
+                        Release Date: <br/> {album.release_date}
+                      </Card.Text>
 
-                    <Button
-                      href={album.external_urls.spotify}
-                      style={{
-                        backgroundColor: 'black',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: '15px',
-                        borderRadius: '5px',
-                        padding: '10px'
-                      }}
-                    >
-                      Album Link!!
-                    </Button>
-                  </CardBody>
-                </Card>
+                      <Button
+                        href={album.external_urls.spotify}
+                        style={{
+                          backgroundColor: 'black',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
+                          borderRadius: '5px',
+                          padding: '10px'
+                        }}
+                      >
+                        Album Link!!
+                      </Button>
+                    </CardBody>
+                  </Card>
+                </motion.div>
               )
-
             })
           }
         </Row>

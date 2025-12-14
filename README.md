@@ -32,5 +32,5 @@ Deployed on Vercel: spotify-gallery-beta.vercel.app
 
 ## Preview
 
-![56DE73C0-57A5-4171-8122-D4179814C453_1_206_a](https://github.com/user-attachments/assets/24e08ac9-94a4-419a-826e-be9b4ee260be)
+https://github.com/user-attachments/assets/e680dfbc-ffc8-4524-ba39-b3fb516cf810
 

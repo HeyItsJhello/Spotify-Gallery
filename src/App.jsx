@@ -10,7 +10,7 @@ import {
   CardTitle
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { motion } from "motion/react"
+import { motion, scale } from "motion/react"
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
 
@@ -77,7 +77,11 @@ function App() {
     )
       .then((result) => result.json())
       .then((data) => {
-        setAlbums(data.items)
+        const updatedAlbums = data.items.map((album) => ({
+          ...album,
+          length: album.total_tracks, // Get the length of the album from total_tracks property
+        }));
+        setAlbums(updatedAlbums);
       });
   }
 
@@ -122,8 +126,8 @@ function App() {
           style = {{
             display: "flex",
             flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
+            overflowX: "scroll",
+            justifyContent: "flex-start",
             alignContent: "center"
           }}
         >
@@ -131,61 +135,73 @@ function App() {
             albums.map((album, index) => {
               return (
                 <motion.div
-                  initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={{ scale: 0, rotateY: -270, opacity: 0 }}
+                  whileInView={{ scale: 1,rotateY: 0, opacity: 1 }}
+                  transition={{ transition: "spring", duration: 0.5}}
                   key={album.id}
                   className="card"
                 >
-                  <Card
-                    key = {album.id}
-                    style = {{
-                      backgroundColor: "white",
-                      margin: "10px",
-                      borderRadius: "5px",
-                      marginBottom: "30px"
-                    }}
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
                   >
-                    <Card.Img
-                      width={200}
-                      src={album.images[0].url}
-                      style={{borderRadius: '4%'}}
-                    />
 
-                    <CardBody>
-                      <CardTitle
-                        style={{
-                          whiteSpace: 'wrap',
-                          fontWeight: 'bold',
-                          maxWidth: '200px',
-                          fontSize: '18px',
-                          marginTop: '10px',
-                          color: 'black'
-                        }}
-                      >
-                        {album.name}
-                      </CardTitle>
+                  
+                    <Card
+                      key = {album.id}
+                      style = {{
+                        backgroundColor: "white",
+                        margin: "10px",
+                        borderRadius: "5px",
+                        marginBottom: "30px"
+                      }}
+                    >
+                      <Card.Img
+                        width={200}
+                        src={album.images[0].url}
+                        style={{borderRadius: '4%'}}
+                      />
 
-                      <Card.Text
-                        style = {{color: 'black'}}
-                      >
-                        Release Date: <br/> {album.release_date}
-                      </Card.Text>
+                      <CardBody>
+                        <CardTitle
+                          style={{
+                            whiteSpace: 'wrap',
+                            fontWeight: 'bold',
+                            maxWidth: '200px',
+                            fontSize: '18px',
+                            marginTop: '10px',
+                            color: 'black'
+                          }}
+                        >
+                          {album.name}
+                        </CardTitle>
 
-                      <Button
-                        href={album.external_urls.spotify}
-                        style={{
-                          backgroundColor: 'black',
-                          color: 'white',
-                          fontWeight: 'bold',
-                          fontSize: '15px',
-                          borderRadius: '5px',
-                          padding: '10px'
-                        }}
-                      >
-                        Album Link!!
-                      </Button>
-                    </CardBody>
-                  </Card>
+                        <Card.Text
+                          style = {{color: 'black'}}
+                        >
+                          <b>Song Count: {album.length} <br/> </b>
+                          Release Date: <br/> {album.release_date}
+                        </Card.Text>
+
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          <Button
+                            href={album.external_urls.spotify}
+                            style={{
+                              backgroundColor: 'black',
+                              color: 'white',
+                              fontWeight: 'bold',
+                              fontSize: '15px',
+                              borderRadius: '5px',
+                              padding: '10px'
+                            }}
+                          >
+                            Album Link!!
+                          </Button>
+                        </motion.div>
+                      </CardBody>
+                    </Card>
+                  </motion.div>
                 </motion.div>
               )
             })

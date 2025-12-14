@@ -87,44 +87,49 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Spotify Gallery</h1>
+      <div className = "SearchBar">
+        <h1>Spotify Gallery</h1>
 
-      <br></br>
+        <br></br>
 
-      <Container>
-        <InputGroup>
-          <FormControl
-            placeholder="Search For Artist"
-            type="input"
-            aria-label="Search for an Artist"
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                search();
-              }
-            }}
-            onChange={(event) => setSearchInput(event.target.value)}
+        <Container>
+          <InputGroup>
+            <FormControl
+              placeholder="Search For Artist"
+              type="input"
+              aria-label="Search for an Artist"
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  search();
+                }
+              }}
+              onChange={(event) => setSearchInput(event.target.value)}
 
-            style={{
-              width: "300px",
-              height: "35px",
-              borderWidth: "0px",
-              borderStyle: "solid",
-              borderRadius: "5px",
-              marginRight: "10px",
-              paddingLeft: "10px",
-            }}
-          />
-
-          <Button onClick={search}>Search</Button>
-        </InputGroup>
-      </Container>
-      
+              style={{
+                width: "350px",
+                height: "80px",
+                borderWidth: "0px",
+                borderStyle: "solid",
+                borderRadius: "10px",
+                marginRight: "10px",
+                paddingLeft: "10px",
+                marginBottom: "40px",
+                textAlign: 'center'
+              }}
+            />
+            <br/>
+            <Button onClick={search}>Search</Button>
+          </InputGroup>
+        </Container>
+      </div>
       <br></br>
 
       <Container className="Albums">
         <Row
           style = {{
             display: "flex",
+            height: "550px",
+            flexShrink: 0,
             flexDirection: "row",
             overflowX: "scroll",
             justifyContent: "flex-start",

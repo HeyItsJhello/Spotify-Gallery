@@ -28,7 +28,7 @@ I had wanted to create a project where I would access online information provide
 
 ## ⏳ Running the Project
 
-### Deployed on Vercel: [Spotify Gallery Link](external.ink?to=spotify-gallery-beta.vercel.app)
+### Deployed on Vercel: spotify-gallery.vercel.app
 
 ## Preview
 

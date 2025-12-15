@@ -14,11 +14,13 @@ import { motion, scale } from "motion/react"
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
 import logo from "./assets/SpotifyLogo.png"
+
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [albums, setAlbums] = useState([]);
 
+  let card_hovered = false;
   useEffect(() => {
     let authParams = {
       method: "POST",
@@ -39,12 +41,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Add this code block inside the useEffect hook
     albums.forEach((album) => {
       const card = document.getElementById(album.id);
       if (card) {
-        // Add your animation code here
-        card.classList.add("animated"); // Replace "animated" with the class name for your animation
+        card.classList.add("animated");
       }
     });
   }, [albums]);
@@ -79,7 +79,7 @@ function App() {
       .then((data) => {
         const updatedAlbums = data.items.map((album) => ({
           ...album,
-          length: album.total_tracks, // Get the length of the album from total_tracks property
+          length: album.total_tracks,
         }));
         setAlbums(updatedAlbums);
       });
@@ -101,8 +101,6 @@ function App() {
             Spotify Album Gallery
           </div>
         </h1>
-        
-        <br></br>
 
         <Container>
           <InputGroup>
@@ -161,7 +159,10 @@ function App() {
                   className="card"
                 >
                   <motion.div
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ 
+                      scale: 1.1,
+                    }}
+                    
                   >
 
                   
@@ -173,6 +174,7 @@ function App() {
                         borderRadius: "5px",
                         marginBottom: "30px"
                       }}
+                      className="cardComponent"
                     >
                       <Card.Img
                         width={200}
